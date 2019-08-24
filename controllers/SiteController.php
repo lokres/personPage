@@ -10,7 +10,7 @@ use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\Device;
-
+use app\models\User;
 class SiteController extends Controller
 {
     
@@ -65,7 +65,6 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-       
         if($request = Yii::$app->request->post()){
             $model = new Device();
             $model->token = $request['token'];
