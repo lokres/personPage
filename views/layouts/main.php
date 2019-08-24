@@ -30,6 +30,7 @@ AppAsset::register($this);
 
 <div class="wrap">
     <?php
+
     NavBar::begin([
         'brandLabel' => Yii::$app->name,
         'brandUrl' => Yii::$app->homeUrl,
@@ -54,7 +55,8 @@ AppAsset::register($this);
                 )
                 . Html::endForm()
                 . '</li>'
-            )
+            ),
+            Yii::$app->user->identity->type > 5 ?(['label' => 'Admin panel', 'url' => ['/admin/']] ) : ''
         ],
     ]);
     NavBar::end();

@@ -37,7 +37,7 @@ AppAsset::register($this);
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
             ['label' => 'Users list', 'url' => ['/admin/userlist']],
-            ['label' => 'Goods list', 'url' => ['/admin/goodslist']],
+            ['label' => 'Upload', 'url' => ['/admin/upload']],
         ],
     ]);
     NavBar::end();echo Yii::$app->user->identity->type;

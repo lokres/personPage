@@ -12,6 +12,9 @@ use app\models\User;
 use app\models\Cart;
 use app\models\Order;
 use yii\helpers\Url;
+use app\models\UploadForm;
+use yii\web\UploadedFile;
+
 class AdminController extends Controller {
     public $layout = 'admin';
     /**
@@ -27,11 +30,11 @@ class AdminController extends Controller {
                 
                 'rules' => [
                     [
-                        'actions' => ['userlist', 'index', 'useredit', 'goodslist', 'goodedit', 'userdel', 'gooddel'],
+                 
                         'roles' => ['@'],
                         'allow' => true,
                         'matchCallback' => function ($rule, $action) {
-                            return User::isUserAdmin(Yii::$app->user->identity->type);
+                            return Yii::$app->user->identity->type == USER::TYPE_ADMIN;
                         }
                     ],
                 ],
@@ -80,52 +83,18 @@ class AdminController extends Controller {
         return $this->render('edituser',['model' => $model]);
     }
     
-    public function actionGoodslist(){
-        $model = Goods::find();
-        $dataProvider = new ActiveDataProvider([
-            'query' => $model,
-            'pagination' => [
-                'pageSize' => 10,
-            ],
-            'sort' => [
-                'defaultOrder' => [
-                    'id' => SORT_DESC,
-                ]
-            ],
-        ]);
-         return $this->render('goodslist', ['dataProvider' => $dataProvider]);
-    }
-    
-    public function actionGoodedit($id = null){
-        if($id){
-            $model = Goods::findOne(['id' => $id]);
-            if(isset($_POST['Goods'])){
-                $model->desc = $_POST['Goods']['desc'];
-                $model->price = $_POST['Goods']['price'];
-                $model->name = $_POST['Goods']['name'];
-                $model->save();
+    public function actionUpload()
+    {
+        $model = new UploadForm();
+
+        if (Yii::$app->request->isPost) {
+            $model->imageFiles = UploadedFile::getInstances($model, 'imageFiles');
+            if ($model->upload()) {
+                // file is uploaded successfully
+                return;
             }
         }
-        else
-        {
-            $model = new Goods();
-            if(isset($_POST['Goods'])){
-                $model->desc = $_POST['Goods']['desc'];
-                $model->price = $_POST['Goods']['price'];
-                $model->name = $_POST['Goods']['name'];
-                $model->save();
-            }
-        }
-        return $this->render('editgood',['model' => $model]);
-    }
-    
-    public function actionUserdel($id){
-        $model = User::deleteAll(['id' => $id]);
-        $this->redirect(Url::to(['admin/userlist']));
-    }
-    
-    public function actionGooddel($id){
-        $model = Goods::deleteAll(['id' => $id]);
-        $this->redirect(Url::to(['admin/goodslist']));
+
+        return $this->render('upload', ['model' => $model]);
     }
 }

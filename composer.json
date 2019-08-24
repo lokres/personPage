@@ -21,7 +21,9 @@
         "yiisoft/yii2-swiftmailer": "~2.0.0 || ~2.1.0",
         "opensooq/yii2-firebase-notifications": "dev-master",
         "dmirogin/yii2-js-urlmanager": "^1.2",
-        "kowap/yii2-lightgallery": "^1.5"
+        "kowap/yii2-lightgallery": "^1.5",
+        "fxp/composer-asset-plugin": "~1.4.6"
+        
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",
