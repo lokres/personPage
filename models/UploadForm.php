@@ -12,7 +12,10 @@ class UploadForm extends Model
      * @var UploadedFile[]
      */
     public $imageFiles;
-
+    public $album;
+    public $order;
+    public $name;
+    
     public function rules()
     {
         return [

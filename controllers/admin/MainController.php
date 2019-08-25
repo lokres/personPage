@@ -11,6 +11,7 @@ use app\models\Goods;
 use app\models\User;
 use app\models\Cart;
 use app\models\Order;
+use app\models\Images;
 use yii\helpers\Url;
 use app\models\UploadForm;
 use yii\web\UploadedFile;
@@ -96,5 +97,21 @@ class MainController extends Controller {
         }
 
         return $this->render('upload', ['model' => $model]);
+    }
+    
+    public function actionImageList(){
+        $model = Images::find();
+        $dataProvider = new ActiveDataProvider([
+            'query' => $model,
+            'pagination' => [
+                'pageSize' => 10,
+            ],
+            'sort' => [
+                'defaultOrder' => [
+                    'id' => SORT_DESC,
+                ]
+            ],
+        ]);
+        return $this->render('imagelist', ['dataProvider' => $dataProvider]);
     }
 }
