@@ -11,6 +11,7 @@ use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\Device;
 use app\models\User;
+use app\models\Images;
 class SiteController extends Controller
 {
     
@@ -137,24 +138,20 @@ class SiteController extends Controller
     public function actionAbout()
     {
 
-        $dir    = '../web/images/certificates';
-        $images = scandir('../web/images/certificates');
-        foreach ($images as $key => $f) {
-            if (!$f || $f[0] == '.') {
-                unset($images[$key]);
-            }elseif(is_dir($dir . '/' . $f)) {
-                unset($images[$key]);
-            } else {
-                $images[$key] =   
-                [
-                    'thumb' => '../images/certificates/thumb/'.$f,
-                    'src' => '../images/certificates/'.$f,
-                ];
-                
-                
-            }
+        
+
+        $images = Images::find()
+        ->where(['album' => 'cert'])
+        ->orderBy('order')
+        ->all();
+        
+        $path = [];
+        foreach ($images as $image) {
+            $imagePath['thumb'] = '../'.Images::THUMB_PATH.$image->name;
+            $imagePath['src'] = '../'.Images::IMAGE_PATH.$image->name;
+            $path[] = $imagePath;
         }
 
-        return $this->render('about',['images'=>$images]);
+        return $this->render('about',['images'=>$path]);
     }
 }

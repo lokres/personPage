@@ -3,7 +3,9 @@ namespace app\models;
 
 use yii\base\Model;
 use yii\web\UploadedFile;
-
+use app\models\Images;
+use yii\imagine\Image;
+use YII;
 class UploadForm extends Model
 {
     /**
@@ -20,9 +22,20 @@ class UploadForm extends Model
     
     public function upload()
     {
+
         if ($this->validate()) { 
             foreach ($this->imageFiles as $file) {
-                $file->saveAs('images/' . $file->baseName . '.' . $file->extension);
+                $file->saveAs(Images::IMAGE_PATH . $file->baseName . '.' . $file->extension);
+                Image::thumbnail(Images::IMAGE_PATH. $file->baseName . '.' . $file->extension, 130, 100)
+                ->save(Yii::getAlias(Images::THUMB_PATH. $file->baseName . '.' . $file->extension));
+                
+                $model = new Images();
+                $model->name = $file->baseName . '.' . $file->extension;
+                $model->album = 'certificate';
+                $model->order = 0;
+                $model->upload = time();
+                $model->save();
+                
             }
             return true;
         } else {
