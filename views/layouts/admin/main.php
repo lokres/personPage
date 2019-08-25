@@ -36,8 +36,8 @@ AppAsset::register($this);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
-            ['label' => 'Users list', 'url' => ['/admin/userlist']],
-            ['label' => 'Upload', 'url' => ['/admin/upload']],
+            ['label' => 'Users list', 'url' => ['/admin/main/userlist']],
+            ['label' => 'Upload', 'url' => ['/admin/main/upload']],
         ],
     ]);
     NavBar::end();echo Yii::$app->user->identity->type;

@@ -1,5 +1,5 @@
 <?php
-namespace app\controllers;
+namespace app\controllers\admin;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -15,8 +15,8 @@ use yii\helpers\Url;
 use app\models\UploadForm;
 use yii\web\UploadedFile;
 
-class AdminController extends Controller {
-    public $layout = 'admin';
+class MainController extends Controller {
+    public $layout = 'admin/main';
     /**
      * @inheritdoc
      */
