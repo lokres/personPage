@@ -137,11 +137,8 @@ class SiteController extends Controller
      */
     public function actionAbout()
     {
-
-        
-
         $images = Images::find()
-        ->where(['album' => 'cert'])
+        ->where(['album' => 'certificate'])
         ->orderBy('order')
         ->all();
         

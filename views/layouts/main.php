@@ -54,9 +54,9 @@ AppAsset::register($this);
                     ['class' => 'btn btn-link logout']
                 )
                 . Html::endForm()
-                . '</li>'
+                . '</li>'.(Yii::$app->user->identity->type > 5 ?(['label' => 'Admin panel', 'url' => ['/admin/']] ) : '')
             ),
-            Yii::$app->user->identity->type > 5 ?(['label' => 'Admin panel', 'url' => ['/admin/']] ) : ''
+            
         ],
     ]);
     NavBar::end();
