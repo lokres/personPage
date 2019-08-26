@@ -18,7 +18,7 @@ GridView::widget([
             'value' => function($data){
                 return Html::a(
                     'Перейти',
-                    ['admin/useredit', 'id' =>$data->id],
+                    ['admin/main/user-edit-new', 'id' =>$data->id],
                     [
                         'title' => 'Редатикировть',
                     ]
@@ -31,7 +31,7 @@ GridView::widget([
             'value' => function($data){
                 return Html::a(
                     'Удалить',
-                    ['admin/userdel', 'id' =>$data->id],
+                    ['admin/main/userdel', 'id' =>$data->id],
                     [
                         'title' => 'Удалить',
                     ]

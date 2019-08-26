@@ -28,7 +28,6 @@ class MainController extends Controller {
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                
                 'rules' => [
                     [
                  
@@ -75,13 +74,13 @@ class MainController extends Controller {
     
     public function actionUseredit($id){
         $model = User::findOne(['id' => $id]);
-        if(isset($_POST['User'])){
-            $model->email = $_POST['User']['email'];
-            $model->username = $_POST['User']['username'];
-            $model->type = $_POST['User']['type'];
+        if(Yii::$app->request->isPost){
+            $post = Yii::$app->request->post();
+            $model->attributes($post['User']);
+            print_R($model);die;
             $model->save();
         }
-        return $this->render('edituser',['model' => $model]);
+        return $this->render('useredit',['model' => $model]);
     }
     
     public function actionUpload()
@@ -113,5 +112,21 @@ class MainController extends Controller {
             ],
         ]);
         return $this->render('imagelist', ['dataProvider' => $dataProvider]);
+    }
+    
+
+    public function actionUserEditNew($id)
+    {
+        $model = User::findOne(['id' => $id]);
+
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->validate()) {
+                $model->save();
+            }
+        }
+
+        return $this->render('userEditNew', [
+            'model' => $model,
+        ]);
     }
 }
