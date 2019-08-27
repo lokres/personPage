@@ -33,7 +33,7 @@ tests/_support/_generated
 /.vagrant
 
 #all config files
-config
+config/mailer.php
 
 #yii index.php
 /web/index.php
