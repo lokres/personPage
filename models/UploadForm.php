@@ -28,9 +28,9 @@ class UploadForm extends Model
 
         if ($this->validate()) { 
             foreach ($this->imageFiles as $file) {
-                $file->saveAs(Images::IMAGE_PATH . $file->baseName . '.' . $file->extension);
-                Image::thumbnail(Images::IMAGE_PATH. $file->baseName . '.' . $file->extension, 130, 100)
-                ->save(Yii::getAlias(Images::THUMB_PATH. $file->baseName . '.' . $file->extension));
+                $file->saveAs('images/full/'. $file->baseName . '.' . $file->extension);
+                Image::thumbnail('images/full/'. $file->baseName . '.' . $file->extension, 130, 100)
+                ->save(Yii::getAlias('images/thumb/'. $file->baseName . '.' . $file->extension));
                 
                 $model = new Images();
                 $model->name = $file->baseName . '.' . $file->extension;

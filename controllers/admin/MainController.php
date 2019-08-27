@@ -8,22 +8,20 @@ use yii\data\ActiveDataProvider;
 use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\Goods;
-use app\models\User;
 use app\models\Cart;
 use app\models\Order;
 use app\models\Images;
 use yii\helpers\Url;
 use app\models\UploadForm;
 use yii\web\UploadedFile;
+use app\models\User;
 
 class MainController extends Controller {
     public $layout = 'admin/main';
     /**
      * @inheritdoc
      */
-    public function init()
-    {
-    }
+
     public function behaviors() {
         return [
             'access' => [
@@ -34,7 +32,7 @@ class MainController extends Controller {
                         'roles' => ['@'],
                         'allow' => true,
                         'matchCallback' => function ($rule, $action) {
-                            return Yii::$app->user->identity->type == USER::TYPE_ADMIN;
+                            return Yii::$app->user->identity->type == USER::TYPE_ADMIN; 
                         }
                     ],
                 ],
@@ -52,81 +50,10 @@ class MainController extends Controller {
      *
      * @return string
      */
-    public function actionIndex() {
-        return $this->render('index');
-    }
-    public function actionUserlist(){
-        $model = User::find();
-        $dataProvider = new ActiveDataProvider([
-            'query' => $model,
-            'pagination' => [
-                'pageSize' => 10,
-            ],
-            'sort' => [
-                'defaultOrder' => [
-                    'id' => SORT_DESC,
-                ]
-            ],
-        ]);
-        return $this->render('userlist', ['dataProvider' => $dataProvider]);
-        
-    }
-    
-    public function actionUseredit($id){
-        $model = User::findOne(['id' => $id]);
-        if(Yii::$app->request->isPost){
-            $post = Yii::$app->request->post();
-            $model->attributes($post['User']);
-            print_R($model);die;
-            $model->save();
-        }
-        return $this->render('useredit',['model' => $model]);
-    }
-    
-    public function actionUpload()
-    {
-        $model = new UploadForm();
 
-        if (Yii::$app->request->isPost) {
-            $model->imageFiles = UploadedFile::getInstances($model, 'imageFiles');
-            if ($model->upload()) {
-                // file is uploaded successfully
-                return;
-            }
-        }
-
-        return $this->render('upload', ['model' => $model]);
-    }
-    
-    public function actionImageList(){
-        $model = Images::find();
-        $dataProvider = new ActiveDataProvider([
-            'query' => $model,
-            'pagination' => [
-                'pageSize' => 10,
-            ],
-            'sort' => [
-                'defaultOrder' => [
-                    'id' => SORT_DESC,
-                ]
-            ],
-        ]);
-        return $this->render('imagelist', ['dataProvider' => $dataProvider]);
-    }
     
 
-    public function actionUserEditNew($id)
-    {
-        $model = User::findOne(['id' => $id]);
+    
+    
 
-        if ($model->load(Yii::$app->request->post())) {
-            if ($model->validate()) {
-                $model->save();
-            }
-        }
-
-        return $this->render('userEditNew', [
-            'model' => $model,
-        ]);
-    }
 }

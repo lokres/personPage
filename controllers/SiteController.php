@@ -144,8 +144,8 @@ class SiteController extends Controller
         
         $path = [];
         foreach ($images as $image) {
-            $imagePath['thumb'] = '../'.Images::THUMB_PATH.$image->name;
-            $imagePath['src'] = '../'.Images::IMAGE_PATH.$image->name;
+            $imagePath['thumb'] = Images::THUMB_PATH.$image->name;
+            $imagePath['src'] = Images::IMAGE_PATH.$image->name;
             $path[] = $imagePath;
         }
 

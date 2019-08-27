@@ -16,8 +16,8 @@ use Yii;
 class Images extends \yii\db\ActiveRecord
 {
     
-    const IMAGE_PATH = 'images/full/';
-    const THUMB_PATH = 'images/thumb/';
+    const IMAGE_PATH = '/images/full/';
+    const THUMB_PATH = '/images/thumb/';
     
     /**
      * {@inheritdoc}
