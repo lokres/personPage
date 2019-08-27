@@ -34,6 +34,7 @@ tests/_support/_generated
 
 #all config files
 config/mailer.php
+config/db.php
 
 #yii index.php
 /web/index.php
