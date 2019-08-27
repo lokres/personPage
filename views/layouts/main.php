@@ -56,7 +56,7 @@ AppAsset::register($this);
                 . Html::endForm()
                 . '</li>'
             ),
-            @Yii::$app->user->identity->type > 5 ?(['label' => 'Admin panel', 'url' => ['/admin/main']] ) : ''
+            @Yii::$app->user->identity->type > 5 ?(['label' => 'Admin panel', 'url' => ['/admin/user']] ) : ''
         ],
     ]);
     NavBar::end();
