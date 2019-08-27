@@ -37,3 +37,6 @@ config/mailer.php
 
 #yii index.php
 /web/index.php
+
+#yii images
+/web/images
