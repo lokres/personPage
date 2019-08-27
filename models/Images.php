@@ -3,7 +3,7 @@
 namespace app\models;
 
 use Yii;
-
+use yii\imagine\Image;
 /**
  * This is the model class for table "images".
  *
@@ -15,9 +15,9 @@ use Yii;
  */
 class Images extends \yii\db\ActiveRecord
 {
-    
-    const IMAGE_PATH = '/images/full/';
-    const THUMB_PATH = '/images/thumb/';
+    public $imageFile;
+    const IMAGE_PATH = '@web/images/full/';
+    const THUMB_PATH = '@web/images/thumb/';
     
     /**
      * {@inheritdoc}
@@ -37,6 +37,7 @@ class Images extends \yii\db\ActiveRecord
             [['order', 'upload'], 'integer'],
             [['name', 'album'], 'string', 'max' => 32],
             [['name'], 'unique'],
+            [['imageFile'], 'file', 'extensions' => 'png, jpg'],
         ];
     }
 
@@ -53,4 +54,5 @@ class Images extends \yii\db\ActiveRecord
             'upload' => 'Upload',
         ];
     }
+    
 }

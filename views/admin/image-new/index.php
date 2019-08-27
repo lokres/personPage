@@ -2,20 +2,20 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-
+use app\models\Images;
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\UserSearch */
+/* @var $searchModel app\models\ImagesSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Users');
+$this->title = Yii::t('app', 'Images');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="user-index">
+<div class="images-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Create User'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'Create Images'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -27,15 +27,15 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'username',
-         //   'auth_key',
-            'type',
-          //  'password_hash',
-            //'password_reset_token',
-            'email:email',
-            //'status',
-            'created_at',
-            //'updated_at',
+            [
+                'format' => 'image',
+                'value'=>function($data) { return Images::THUMB_PATH.$data->name; },
+            ],
+
+            'name',
+            'album',
+            'order',
+            'upload',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

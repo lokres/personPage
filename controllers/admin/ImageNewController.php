@@ -3,42 +3,39 @@
 namespace app\controllers\admin;
 
 use Yii;
-use app\models\User;
-use app\models\UserSearch;
+use app\models\Images;
+use app\models\ImagesSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-
+use yii\web\UploadedFile;
 /**
- * UserNewController implements the CRUD actions for User model.
+ * ImageNewController implements the CRUD actions for Images model.
  */
-class UserController extends MainController
+class ImageNewController extends Controller
 {
     /**
      * {@inheritdoc}
      */
     public function behaviors()
     {
-        array_merge(
-              parent::behaviors()
-          );
-        return array_merge([
+        return [
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
                 ],
             ],
-        ],parent::behaviors());
+        ];
     }
 
     /**
-     * Lists all User models.
+     * Lists all Images models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new UserSearch();
+        $searchModel = new ImagesSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -48,7 +45,7 @@ class UserController extends MainController
     }
 
     /**
-     * Displays a single User model.
+     * Displays a single Images model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -61,25 +58,38 @@ class UserController extends MainController
     }
 
     /**
-     * Creates a new User model.
+     * Creates a new Images model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new User();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        
+        $model = new Images();
+        if (Yii::$app->request->isPost) {
+            $model->load(Yii::$app->request->post());
+            $model->upload = time();
+            $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
+            $model->name = $model->imageFile->name; 
+            if ($model->validate()) {
+                $model->save();
+                $model->imageFile->saveAs( 'images/full/' . $model->imageFile);
+                $model->imageFile->saveAs( 'images/thumb/' . $model->imageFile);
+                
+                 return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
 
+            
+
+        
         return $this->render('create', [
-            'model' => $model,
+            'model' => $model
         ]);
     }
 
     /**
-     * Updates an existing User model.
+     * Updates an existing Images model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -89,12 +99,7 @@ class UserController extends MainController
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post())) {
-            if ($model->validate()) {
-                if($model->password)
-                    $model->setPassword(trim($model->password));
-                $model->save();
-            }
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -104,7 +109,7 @@ class UserController extends MainController
     }
 
     /**
-     * Deletes an existing User model.
+     * Deletes an existing Images model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -118,15 +123,15 @@ class UserController extends MainController
     }
 
     /**
-     * Finds the User model based on its primary key value.
+     * Finds the Images model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return User the loaded model
+     * @return Images the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = User::findOne($id)) !== null) {
+        if (($model = Images::findOne($id)) !== null) {
             return $model;
         }
 
