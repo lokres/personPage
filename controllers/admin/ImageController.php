@@ -9,6 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
+use yii\imagine\Image;
 /**
  * ImageNewController implements the CRUD actions for Images model.
  */
@@ -72,10 +73,12 @@ class ImageController extends MainController
             $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
             $model->name = $model->imageFile->name; 
             if ($model->validate()) {
+
                 $model->save();
-                $model->imageFile->saveAs( 'images/full/' . $model->imageFile);
-                $model->imageFile->saveAs( 'images/thumb/' . $model->imageFile);
-                
+                $model->imageFile->saveAs('images/full/' . $model->imageFile);
+                $model->setSize();
+                Image::thumbnail('images/full/'. $model->imageFile, $model->thumbWidth, $model->thumbHeight)
+                ->save('images/thumb/'. $model->imageFile);
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         }
