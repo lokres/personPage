@@ -1,36 +1,45 @@
 <?php
 
-use yii\grid\GridView;
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
-use app\models\Images as Image;
+use yii\grid\GridView;
+use app\models\Images;
+/* @var $this yii\web\View */
+/* @var $searchModel app\models\ImagesSearch */
+/* @var $dataProvider yii\data\ActiveDataProvider */
+
+$this->title = Yii::t('app', 'Images');
+$this->params['breadcrumbs'][] = $this->title;
 ?>
-<?=
+<div class="images-index">
 
-GridView::widget([
-    'dataProvider' => $dataProvider,
-    'columns' => [
-        [
+    <h1><?= Html::encode($this->title) ?></h1>
 
-            'format' => 'image',
-            'value'=>function($data) { return Image::THUMB_PATH.$data->name; },
+    <p>
+        <?= Html::a(Yii::t('app', 'Create Images'), ['create'], ['class' => 'btn btn-success']) ?>
+    </p>
 
+    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+
+    <?= GridView::widget([
+        'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
+        'columns' => [
+            ['class' => 'yii\grid\SerialColumn'],
+
+            'id',
+            [
+                'format' => 'image',
+                'value'=>function($data) { return Images::THUMB_PATH.$data->name; },
+            ],
+
+            'name',
+            'album',
+            'order',
+            'upload',
+
+            ['class' => 'yii\grid\ActionColumn'],
         ],
-        'name',
-                    
-        'album',
-        'order',
-        ['class' => 'yii\grid\ActionColumn'],
-
-    ],
-])
-?>
+    ]); ?>
 
 
-<?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]) ?>
-
-    <?= $form->field($uploadModel, 'imageFiles[]')->fileInput(['multiple' => true, 'accept' => 'image/*']) ?>
-
-    <button>Submit</button>
-
-<?php ActiveForm::end() ?>
+</div>
