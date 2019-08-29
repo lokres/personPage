@@ -66,6 +66,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+        
         if($request = Yii::$app->request->post()){
             $model = new Device();
             $model->token = $request['token'];
