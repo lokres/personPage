@@ -7,8 +7,8 @@ return
         'translations' => [
             'app*' => [
                 'class' => 'yii\i18n\PhpMessageSource',
-                'basePath' => '@common/messages/', // ВАЖНО! этот путь к папке с переводами
-                'sourceLanguage' => 'en-Us', // базовым языком путь будет инглиш
+                'basePath' => '@app/common/messages/', // ВАЖНО! этот путь к папке с переводами
+                'sourceLanguage' => 'en', // базовым языком путь будет инглиш
                 'fileMap' => [
                     'app' => 'app.php', // группа фраз и её файл-источник
                     'app/error' => 'error.php', // для ошибок (тоже какое-то подмножетсво переводимых фраз)
