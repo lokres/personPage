@@ -1,5 +1,5 @@
 <p align="center"> <h1 align="center">Yii 2 Basic Project Template</h1></p>
 <p>
-Project Url = "ovz1.id84995102.m940n.vps.myjino.ru"
+Project Url = <a href="ovz1.id84995102.m940n.vps.myjino.ru">Person Page</a>
 </p>
 
